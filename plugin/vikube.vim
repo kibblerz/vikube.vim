@@ -395,8 +395,8 @@ fun! s:deleteResources(keys)
           \ "out_name": "",
           \ })
   endif
-  let channel = job_getchannel(job)
-  let bufnr = ch_getbufnr(channel, "out")
+  "let channel = job_getchannel(job)
+  let bufnr = ch_getbufnr(job, "out")
   let winnr = winnr()
   exec "sbuffer " . bufnr
   setlocal noswapfile nobuflisted cursorline nonumber fdc=0
