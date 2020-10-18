@@ -14,6 +14,7 @@ fun! g:VTable.update()
     let b:job = jobstart(cmd, {"close_cb": self.outputHandler })
   else
     let b:job = job_start(cmd, {"close_cb": self.outputHandler })
+  endif
   let b:source_changed = 0
 endf
 
@@ -100,6 +101,7 @@ fun! g:VikubeExplorer.update()
     let b:job = jobstart(shellcmd, {"close_cb": self.outputHandler })
   else
     let b:job = job_start(shellcmd, {"close_cb": self.outputHandler })
+  endif
   let b:source_changed = 0
 endf
 
@@ -392,7 +394,7 @@ fun! s:deleteResources(keys)
           \ "out_io": "buffer",
           \ "out_name": "",
           \ })
-
+  endif
   let channel = job_getchannel(job)
   let bufnr = ch_getbufnr(channel, "out")
   let winnr = winnr()
