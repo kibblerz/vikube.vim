@@ -11,7 +11,7 @@ endf
 fun! g:VTable.update()
   let cmd = self.command()
   if has('nvim')
-    let b:job = jobstart(cmd, {"close_cb": self.outputHandler })
+    let b:job = jobstart(cmd, {"close_cb": self.outputNvimHandler })
   else
     let b:job = job_start(cmd, {"close_cb": self.outputHandler })
   endif
@@ -23,6 +23,13 @@ fun! g:VTable.outputHandler(channel)
   while ch_status(a:channel, {'part': 'out'}) == 'buffered'
     call add(lines, ch_read(a:channel))
   endwhile
+  let b:source_cache = join(lines, "\n") . "\n"
+  call self.render()
+endf
+
+fun! g:VTable.outputNvimHandler(job_id, data, event)
+  let lines = []
+  call add(lines, a:data)
   let b:source_cache = join(lines, "\n") . "\n"
   call self.render()
 endf
