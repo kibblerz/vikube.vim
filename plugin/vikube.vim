@@ -10,6 +10,7 @@ endf
 
 fun! g:VTable.update()
   let cmd = self.command()
+  echom "hello"
   if has('nvim')
     echom 'hey ive been called'
     let b:job = jobstart(cmd, {"on_stdout": self.outputNvimHandler, 'stdout_buffered':v:true} )
