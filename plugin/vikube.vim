@@ -34,7 +34,9 @@ fun! g:VTable.outputNvimHandler(job_id, data, event)
   let lines = []
   echom "ERROR"
   for i in a:data
-      echom i
+      for a in i
+        echom a
+      endfor
   endfor
   "call add(lines, a:data)
   let b:source_cache = join(a:data, "\n") . "\n"
