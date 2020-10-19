@@ -33,7 +33,7 @@ endf
 fun! g:VTable.outputNvimHandler(job_id, data, event)
   let lines = []
   echom "ERROR"
-  "throw a:data
+  echom a:data
   "call add(lines, a:data)
   let b:source_cache = join(a:data, "\n") . "\n"
   call self.render()
