@@ -13,7 +13,7 @@ fun! g:VTable.update()
   throw "hello"
   if has('nvim')
     throw 'hey ive been called'
-    let b:job = jobstart(cmd, {"on_stdout": self.outputNvimHandler, "stdout_buffered":v:true} )
+    let b:job = jobstart(cmd, {"on_stdout": function(self.outputNvimHandler), "stdout_buffered":v:true} )
   else
     throw 'i wasnt called'
     let b:job = job_start(cmd, {"close_cb": self.outputHandler })
@@ -34,7 +34,7 @@ fun! g:VTable.outputNvimHandler(job_id, data, event)
   let lines = []
    call add(lines, a:data)
   let b:source_cache = join(a:data, "\n") . "\n"
-  call g:VTable.render()
+  call self.render()
 endf
 
 fun! g:VTable.render()
@@ -108,7 +108,7 @@ fun! g:VikubeExplorer.update()
   let cmd = self.command()
   let shellcmd = ["bash", "-c", cmd . " | awk 'NR == 1; NR > 1 {print $0 | \"sort -b -k1\"}'"]
   if has('nvim')
-    let b:job = jobstart(shellcmd, {"on_stdout": self.outputNvimHandler, "stdout_buffered":v:true})
+    let b:job = jobstart(shellcmd, {"on_stdout": function(self.outputNvimHandler), "stdout_buffered":v:true})
   else
     let b:job = job_start(shellcmd, {"close_cb": self.outputHandler })
   endif
