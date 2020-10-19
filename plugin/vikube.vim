@@ -13,7 +13,8 @@ fun! g:VTable.update()
   throw "hello"
   if has('nvim')
     throw 'hey ive been called'
-    let b:job = jobstart(cmd, {"on_stdout": self.outputNvimHandler(realSelf = self), "stdout_buffered":v:true} )
+    let b:job = jobstart(cmd, {"on_stdout": self.outputNvimHandler), "stdout_buffered":v:true} )
+    self.render()
   else
     throw 'i wasnt called'
     let b:job = job_start(cmd, {"close_cb": self.outputHandler })
@@ -30,12 +31,11 @@ fun! g:VTable.outputHandler(channel)
   call self.render()
 endf
 
-fun! g:VTable.outputNvimHandler(job_id, data, event, realSelf)
+fun! g:VTable.outputNvimHandler(job_id, data, event)
   let lines = []
    call add(lines, a:data)
   let b:source_cache = join(a:data, "\n") . "\n"
   echom b:source_cache
-  call g:realSelf.render()
 endf
 
 fun! g:VTable.render()
