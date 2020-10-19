@@ -27,7 +27,6 @@ fun! g:VTable.outputHandler(channel)
     call add(lines, ch_read(a:channel))
   endwhile
   let b:source_cache = join(lines, "\n") . "\n"
-  call self.render()
 
 endf
 
