@@ -13,7 +13,7 @@ fun! g:VTable.update()
   throw "hello"
   if has('nvim')
     throw 'hey ive been called'
-    if exists(b:source_cache)
+    if b:source_cache
       b:source_cache = ""
     else
       let b:source_cache = ""
@@ -117,7 +117,7 @@ fun! g:VikubeExplorer.update()
   let cmd = self.command()
   let shellcmd = ["bash", "-c", cmd . " | awk 'NR == 1; NR > 1 {print $0 | \"sort -b -k1\"}'"]
   if has('nvim')
-    if exists(b:source_cache)
+    if b:source_cache
         b:source_cache = ""
     else
         let b:source_cache = ""
