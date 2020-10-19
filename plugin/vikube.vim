@@ -11,7 +11,7 @@ endf
 fun! g:VTable.update()
   let cmd = self.command()
   if has('nvim')
-    let b:job = jobstart(cmd, {"on_stdout": self.outputNvimHandler} )
+    let b:job = jobstart(cmd, {"on_stdout": self.outputNvimHandler, 'stdout_buffered':v:true} )
   else
     let b:job = job_start(cmd, {"close_cb": self.outputHandler })
   endif
