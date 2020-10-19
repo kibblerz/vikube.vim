@@ -31,7 +31,7 @@ fun! g:VTable.outputNvimHandler(job_id, data, event)
   let lines = []
   echo a:data
   call add(lines, a:data[0])
-  let b:source_cache = join(lines, "\n") . "\n"
+  let b:source_cache = join(a:data, "\n") . "\n"
   call self.render()
 endf
 
