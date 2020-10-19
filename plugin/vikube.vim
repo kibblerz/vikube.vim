@@ -13,7 +13,6 @@ fun! g:VTable.update()
   if has('nvim')
     throw 'hey ive been called'
     let b:job = jobstart(cmd, {"on_stdout": self.outputNvimHandler, 'stdout_buffered':v:true, 'rpc':v:true)} )
-    let b:source_cache = rpcrequest(b:job, function({return b:source_cache}), {'rpc':v:true})
     self.render()
   else
     throw 'i wasnt called'
@@ -46,7 +45,8 @@ fun! g:VTable.render()
     call self.update()
     return
   endif
-
+  
+  echom b:source_cache
   let current_search = getline(2)
   let s = strpart(current_search, len(g:vikube_search_prefix))
 
@@ -112,7 +112,6 @@ fun! g:VikubeExplorer.update()
   let shellcmd = ["bash", "-c", cmd . " | awk 'NR == 1; NR > 1 {print $0 | \"sort -b -k1\"}'"]
   if has('nvim')
   let b:job = jobstart(shellcmd, {"on_stdout": self.outputNvimHandler,'stdout_buffered':v:true, 'rpc':v:true})
-  let b:source_cache = rpcrequest(b:job, function({return b:source_cache}), {'rpc': v:true})
   self.Update()
   else
     let b:job = job_start(shellcmd, {"close_cb": self.outputHandler })
