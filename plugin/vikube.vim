@@ -35,8 +35,7 @@ fun! g:VTable.outputNvimHandler(job_id, data, event)
   let lines = []
    call add(lines, a:data)
    "chom a:data
-   b:source_cache = join(a:data, "\n") . "\n"
-   echom nvim_list_bufs()
+   let b:source_cache = join(a:data, "\n") . "\n"
   "echom b:source_cache
 endf
 
