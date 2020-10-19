@@ -13,7 +13,11 @@ fun! g:VTable.update()
   throw "hello"
   if has('nvim')
     throw 'hey ive been called'
-    b:source_cache = ""
+    if exists(b:source_cache)
+      b:source_cache = ""
+    else
+      let b:source_cache = ""
+    endif
     let b:job = jobstart(cmd, {"on_stdout": self.outputNvimHandler, 'stdout_buffered':v:true)} )
     self.render()
   else
@@ -113,7 +117,11 @@ fun! g:VikubeExplorer.update()
   let cmd = self.command()
   let shellcmd = ["bash", "-c", cmd . " | awk 'NR == 1; NR > 1 {print $0 | \"sort -b -k1\"}'"]
   if has('nvim')
-    b:source_cache = ""
+    if exists(b:source_cache)
+        b:source_cache = ""
+    else
+        let b:source_cache = ""
+    endif
     let b:job = jobstart(shellcmd, {"on_stdout": self.outputNvimHandler,'stdout_buffered':v:true})
   else
     let b:job = job_start(shellcmd, {"close_cb": self.outputHandler })
