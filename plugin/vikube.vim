@@ -109,7 +109,7 @@ fun! g:VikubeExplorer.update()
   let cmd = self.command()
   let shellcmd = ["bash", "-c", cmd . " | awk 'NR == 1; NR > 1 {print $0 | \"sort -b -k1\"}'"]
   if has('nvim')
-    let b:job = jobstart(shellcmd, {"on_stdout": self.outputHandler, "stdout_buffered":v:true })
+    let b:job = jobstart(shellcmd, {"on_stdout": self.outputNvimHandler, "stdout_buffered":v:true })
   else
     let b:job = job_start(shellcmd, {"close_cb": self.outputHandler })
   endif
